@@ -19,7 +19,7 @@ const Header = () => {
   <div className="container-fluid mx-3 ">
    <div className='d-flex left-content '>
    {/* <img src={logo} className='logo-img img img-fluid' alt=''/> */}
-<strong><h3>Keep</h3></strong>
+<strong><h3>Keep Shop</h3></strong>
    </div>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span className="navbar-toggler-icon"></span>
@@ -58,12 +58,16 @@ const Header = () => {
         <li className="nav-item" >
           <NavLink style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/profile">Profile</NavLink>
         </li>
+        <li  className="nav-item" >
+        <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link "  aria-current="page" to={`/cart`}>Cart</NavLink>
+      </li>
       
      {auth.token? 
        <>
         <li  className="nav-item" >
         <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link "  aria-current="page" to={`/dashboard/${auth?.user?.role===1 ? 'admin':''}`}>{auth.user.name}</NavLink>
       </li>
+     
       <li  className="nav-item" >
         <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link " onClick={handleLogout} aria-current="page" to="/login">Logout</NavLink>
       </li>

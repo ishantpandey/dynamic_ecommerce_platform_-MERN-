@@ -1,15 +1,17 @@
 const jwt=require('jsonwebtoken')
-const  secret="ikp1999"
+
 const signUser=async(user)=>{
    return jwt.sign({
     id:user._id,
     name:user.name,
     email:user.email
-   },secret)
+   }, process.env.SECRET
+)
   
 }
 
 const varifyUser=async(token)=>{
-    return jwt.verify(token,secret)
+    return jwt.verify(token, process.env.SECRET
+    )
 }
 module.exports={signUser,varifyUser}

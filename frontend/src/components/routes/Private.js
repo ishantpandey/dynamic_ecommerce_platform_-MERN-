@@ -7,11 +7,11 @@ import axios from 'axios'
 const PrivateRoute = () => {
     const[auth,setauth]=useAuth()
     const[ok,setok]=useState(false)
-    console.log(auth);
+
    
     useEffect(()=>{
         const authCheck=async()=>{
-            console.log('inside function');
+           
             const res=await axios.get('http://localhost:8000/auth/api/auth-user')
         if(res.data.ok){  
             setok(true)

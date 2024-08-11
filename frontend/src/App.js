@@ -20,6 +20,8 @@ import Profile from './pages/user/Profile';
 import Product from './pages/Admin/Product';
 import SearchResult from './pages/SearchResult';
 import ProductDetails from './pages/ProductDetails';
+import ByCategory from './pages/ByCategory';
+import Cart from './pages/Cart';
 
 
 
@@ -31,9 +33,11 @@ function App() {
     <Route path='/' element={<HomePage/>}/>
     <Route path='/register' element={<Register/>}/>
     <Route path='/login' element={<Login/>}/>
+    <Route path='/cart' element={<Cart/>}/>
     <Route path='/forgetpassword' element={<ForgetPassword/>}/>
     <Route path='/search-result' element={<SearchResult/>}/>
     <Route path='/product-details/:slug' element={<ProductDetails/>}/>
+    <Route path='/category/:slug' element={<ByCategory/>}/>
     <Route path='/dashboard' element={<PrivateRoute/>}>
     <Route path='' element={<Dashboard/>}/>
     <Route path='orders' element={<Orders/>}/>

@@ -10,7 +10,7 @@ const SearchResult = () => {
   return (
     <Layout>
          <div className="container">
-        <div className="row center mt-5">
+        <div className="row  mt-5">
         
           <div className="col-md-8 mx-auto">
           {search?.result.length}

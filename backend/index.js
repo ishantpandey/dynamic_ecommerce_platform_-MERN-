@@ -5,7 +5,9 @@ const cookieparser=require('cookie-parser')
 const authRouter=require('./routers/authRoutes')
 const categoryRouter=require('./routers/categoryRoutes')
 const productRouter=require('./routers/productRoutes')
+const orderRouter = require('./routers/orderRoutes')
 const cors =require('cors')
+const dotenv=require('dotenv').config()
 
 
 
@@ -22,9 +24,10 @@ app.use(cors({
  app.use('/auth/api',authRouter)
  app.use('/auth/api/category',categoryRouter)
  app.use('/auth/api/product',productRouter)
+ app.use('/auth/api/order',orderRouter)
 app.use(express.urlencoded({extended:false}))
 
 
-app.listen(8000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log('server started');
 })

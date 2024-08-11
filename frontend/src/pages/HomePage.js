@@ -4,6 +4,7 @@ import { useAuth } from '../context/auth'
 import axios from 'axios'
 import Prices from '../components/Layout/Prices'
 import { useNavigate } from 'react-router-dom'
+import { useCart } from '../context/cartContext'
 
 
 const HomePage = () => {
@@ -16,6 +17,7 @@ const HomePage = () => {
   const[total,setTotal]=useState(0)
   const[page,setpage]=useState(1)
   const[loading,setloading]=useState(false)
+ const [cart,setCart]=useCart()
 
   //---------------get total item------------
   const getTotal=async(req,res)=>{
@@ -102,8 +104,14 @@ const loadMore=async()=>{
     console.log(error);  
   }
   }
+  //-----------------add to cart--------
+  const addToCart=(val)=>{
+     setCart([...cart,val])
+     localStorage.setItem('cart',JSON.stringify([...cart,val]))
+  }
+
   useEffect(()=>{
-    getCategory()
+    getCategory()   
     getTotal()
   },[])
   useEffect(()=>{
@@ -152,30 +160,35 @@ const loadMore=async()=>{
           <div className="col-md-8 center">
           {products?.length}
             <div className="row mx-auto">
-              {products?.map((val) => {
+              {products?.map((val,id) => {
                 return (
-                  // <Link key={val._id} to={`/dashboard/admin/update-product/${val.slug}`}>
-                  <div className="card" style={{ width: '15rem' }}>
-                    <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} className="card-img-top img-fluid" alt="..." />
-                    <div className="card-body">
-                      {val.names}
-                      <p className="card-text">{val.description}</p>
-                      <div>Price {val.price}</div>
-                      <div>Price {val.category.names}</div>
+                  <div className="col-md-4 col-8 mx-auto gx-2 gy-2">
+   
+                   {/* <Link key={val._id} to={`/dashboard/admin/update-product/${val.slug}`}> */}
+                   <div className="card" key={id} style={{ width: '15rem' }}>
+                     <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} className="card-img-top img-fluid" alt="..." />
+                     <div className="card-body">
+                       {val.names}
+                       <p className="card-text">{val.description}</p>
+                       <div className='price'>
+                       <div>Price {val.price}</div>
+                       <div>Free Delivery</div>
+                       </div>
                       
-                    </div>
-                    <div className='card-footer d-flex'>
-                      <button className='btn btn-outline-secondary me-2' onClick={()=>{navigate(`/product-details/${val.slug}`)}}>More Details</button>
-                      <button className='btn btn-outline-warning '>Add to Cart</button>
-                    </div>
+                     </div>
+                     <div className='price'>
+                       <button className='btn btn-outline-secondary me-2' onClick={()=>{navigate(`/product-details/${val.slug}`)}}>More Details</button>
+                       <button className='btn btn-outline-warning ' onClick={()=>{addToCart(val)}} >Add to Cart</button>
+                     </div>
+                   </div>
+                      
+                   {/* </Link> */}
                   </div>
-                  // </Link>
-
 
                 )
               })}
             </div>
-             <div>
+             <div className='loadMore'>
               {products && products.length<total && !checked.length && !radio.length && (
                 <button className='btn btn-secondary' onClick={(e)=>{
                   e.preventDefault()

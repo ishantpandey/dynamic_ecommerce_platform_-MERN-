@@ -11,7 +11,7 @@ body{
     background-origin: content-box;
     background-repeat: no-repeat;
     background-size: cover;
-	min-height:100vh;
+	min-height:80vh;
 	font-family: 'Noto Sans', sans-serif;
 }
 .text-center{
@@ -80,3 +80,26 @@ body{
 	position:relative;
 }
 
+/*------------------ Footer------------ */
+.footer{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+/*-------------- load More -----------------*/
+.loadMore{
+	display: flex;
+	flex-direction: row-reverse;
+	
+}
+
+/* -----------------Home price--------------- */
+
+.price{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content:space-between;
+}

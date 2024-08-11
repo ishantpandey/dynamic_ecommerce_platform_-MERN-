@@ -1,6 +1,11 @@
 const ProductModel = require('../models/productModels')
+const CategoryData = require('../models/categoryModel')
 const fs=require('fs')
 const slugify =require('slugify') 
+require('dotenv').config()
+
+
+ 
 
 //------------------------------Create Category-------------------
 const createProduct=async(req,res)=>{
@@ -201,5 +206,20 @@ try {
    res.status(500).send({success:false,msg:'server problem',error})   
 }
 }
+//-----------------Product by category-------------
+const byCategory=async(req,res)=>{
+   try {
+      const {slug}=req.params
+   
+      const categoryid = await CategoryData.find({slug})
+      const product = await ProductModel.find({category:categoryid}).select("-photo").populate("category")
+     
+      res.status(200).send(product)
+   } catch (error) {
+      res.status(500).send({success:false,msg:'server problem',error})   
+   }
+}
 
-module.exports={createProduct,updateProduct,deleteProduct,AllProduct,singleProduct,ProductImg,FilterProduct,ProductCount,productList,serachProduct,relatedProduct};
+
+
+module.exports={createProduct,updateProduct,deleteProduct,AllProduct,singleProduct,ProductImg,FilterProduct,ProductCount,productList,serachProduct,relatedProduct,byCategory};

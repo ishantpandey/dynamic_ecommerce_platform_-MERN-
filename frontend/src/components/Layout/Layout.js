@@ -13,9 +13,11 @@ const Layout = ({children,title,description,keyword}) => {
     <meta name='keyword' content={keyword} />
     <title>{title}</title>
     </Helmet>
-    <Header/>
-    <div style={{minHeight:"80vh"}}><ToastContainer/>{children}</div>
-    <Footer/>
+   <div>
+   <Header/>
+    <div><div  style={{minHeight:"81vh" , position:"relative",marginBottom:"5px"}}><ToastContainer/>{children}</div></div>
+    <Footer />
+   </div>
     </>
   )
 }

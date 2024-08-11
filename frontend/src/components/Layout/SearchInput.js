@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const SearchInput = () => {
     const navigate=useNavigate()
-    const [search,setsearch]=useSearch()
+    const [search,setsearch]=useSearch("")
     const handleSearch=async(e)=>{
         e.preventDefault()
         const {data} = await axios.get(`http://localhost:8000/auth/api/product/search/${search.keyword}`)

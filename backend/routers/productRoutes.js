@@ -12,8 +12,12 @@ const {createProduct,
       ProductCount,
       productList,
       serachProduct,
-      relatedProduct
+      relatedProduct,
+      byCategory,
+
       } = require('../controller/productController')
+const braintree = require('braintree')
+
 
 
 router.post('/create-product',authUser,isAdmin,formidable(),createProduct)
@@ -27,6 +31,8 @@ router.get('/product-count',ProductCount)
 router.get('/product-list/:page',productList)
 router.get('/search/:keyword',serachProduct)
 router.get('/related-product/:categoryid',relatedProduct)
+router.get('/category-product/:slug',byCategory)
+
 
 
 module.exports=router;
