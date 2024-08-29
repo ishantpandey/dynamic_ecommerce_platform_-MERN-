@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout/Layout'
 import { useAuth } from '../context/auth'
+// import {  toast } from 'react-toastify';
 import axios from 'axios'
 import Prices from '../components/Layout/Prices'
-import { useNavigate } from 'react-router-dom'
-import { useCart } from '../context/cartContext'
+import { Link } from 'react-router-dom'
+// import { useCart } from '../context/cartContext'
+import Carousel from './Carousel'
+import Card from './Card'
+import useCategory from '../components/Custom hook/useCategory'
+
+
 
 
 const HomePage = () => {
   const [auth]=useAuth()
-  const navigate=useNavigate()
+
   const[cat,setcat]=useState()
   const[checked,setchecked]=useState([])
   const [radio,setRadio]=useState([])
@@ -17,7 +23,8 @@ const HomePage = () => {
   const[total,setTotal]=useState(0)
   const[page,setpage]=useState(1)
   const[loading,setloading]=useState(false)
- const [cart,setCart]=useCart()
+  const category = useCategory()
+
 
   //---------------get total item------------
   const getTotal=async(req,res)=>{
@@ -105,10 +112,7 @@ const loadMore=async()=>{
   }
   }
   //-----------------add to cart--------
-  const addToCart=(val)=>{
-     setCart([...cart,val])
-     localStorage.setItem('cart',JSON.stringify([...cart,val]))
-  }
+ 
 
   useEffect(()=>{
     getCategory()   
@@ -121,13 +125,54 @@ const loadMore=async()=>{
   useEffect(()=>{ loadMore()},[page])
   
   return (
-    <Layout title='home'>
-      <div className="container">
-        <div className="row center mt-5">
-        
-          <div className="col-md-3 center">
-            <div>
-              {
+    <Layout title='home' className='layout'>
+      <div className="row">
+        <Carousel/>
+      </div>
+     
+
+<div className="row ">
+          <div className="col-md-1 col-2 my-auto mx-auto">
+              
+            
+<div className='select-box'>
+<select  onChange={(e) => setRadio(e.target.value)}>
+  <option selected>Price</option>
+ {
+Prices?.map((val) => {
+  return (
+  <option value={val.array}>{val.name}</option>
+  )
+  
+})
+}
+<option onClick={()=>{window.location.reload()}}>Reset</option>
+ </select>
+</div>
+ 
+      
+          </div>
+          <div className="col-md-11 col-10">
+          <div class="horizontal-scroll">
+          <div class="horizontal-bar">
+          {
+            category?.map((val)=>{
+              return(
+               <div class="item"><Link class="dropdown-item " key={val._id} to={`/category/${val.slug}`}>
+                <img src="https://assets.ajio.com/medias/sys_master/root/20231011/t3j8/65267860ddf779151932c1ee/-473Wx593H-466696477-multi-MODEL.jpg" className='img img-fluid' alt="" />
+                <div>{val.names}</div>
+                </Link></div>
+                
+              )
+            })
+          }
+   
+   
+</div>
+
+</div>
+
+          {/* {
                 cat?.map((val) => {
                   return (
                     <div className='form-check' key={val._id}>
@@ -136,70 +181,36 @@ const loadMore=async()=>{
                     </div>
                   )
                 })
-              }
-            </div>
-            <div className='mt-2 mb-2'>Filter By Price</div>
-        
-            <div>
-              {
-
-                Prices?.map((val) => {
-                  return (<div class="form-check" key={val._id}>
-                  
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" value={val.array} onChange={(e) => setRadio(e.target.value)} />
-                    <label class="form-check-label" for="flexRadioDefault1">
-                     {val.name} 
-                       
-                    </label>
-                  </div>)
-                })
-              }
-            </div>
-            <div><button className='btn btn-warning' onClick={()=>{window.location.reload()}}>Reset</button></div>
+              } */}
           </div>
-          <div className="col-md-8 center">
-          {products?.length}
-            <div className="row mx-auto">
-              {products?.map((val,id) => {
-                return (
-                  <div className="col-md-4 col-8 mx-auto gx-2 gy-2">
-   
-                   {/* <Link key={val._id} to={`/dashboard/admin/update-product/${val.slug}`}> */}
-                   <div className="card" key={id} style={{ width: '15rem' }}>
-                     <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} className="card-img-top img-fluid" alt="..." />
-                     <div className="card-body">
-                       {val.names}
-                       <p className="card-text">{val.description}</p>
-                       <div className='price'>
-                       <div>Price {val.price}</div>
-                       <div>Free Delivery</div>
-                       </div>
-                      
-                     </div>
-                     <div className='price'>
-                       <button className='btn btn-outline-secondary me-2' onClick={()=>{navigate(`/product-details/${val.slug}`)}}>More Details</button>
-                       <button className='btn btn-outline-warning ' onClick={()=>{addToCart(val)}} >Add to Cart</button>
-                     </div>
-                   </div>
-                      
-                   {/* </Link> */}
-                  </div>
+        </div>
 
-                )
-              })}
-            </div>
+       
+          
+            
+        <div className="container-fluid">
+  <div className="row justify-content-center shadow mx-auto  product-card" style={{ paddingLeft: '0', paddingRight: '0' }}>
+    {products?.map((val, id) => (
+      <Card key={id} slug={val.slug} pid={val._id} price={val.price} />
+    ))}
+  </div>
+</div>
+
+
+            
              <div className='loadMore'>
               {products && products.length<total && !checked.length && !radio.length && (
                 <button className='btn btn-secondary' onClick={(e)=>{
                   e.preventDefault()
                   setpage(page+1)
                  
-                }}>{loading? "Loading..." : "Load More"}</button>
+                }}>{loading? "Loading..." : <span class="material-symbols-outlined">
+                  refresh
+                  </span>}</button>
               )}
              </div>
-          </div>
-        </div>
-      </div>
+          
+     
     </Layout>
   )
 }

@@ -3,15 +3,17 @@ import Layout from '../components/Layout/Layout'
 import { useCart } from '../context/cartContext'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/auth'
-import DropIn from "braintree-web-drop-in-react";
+
 import axios from 'axios'
 
 const Cart = () => {
-    const navigate=useNavigate()
-    const[address,setAddress]=useState('')
-    const[amount,setamount]=useState()
+const navigate=useNavigate()
+const[address,setAddress]=useState('')
+const[amount,setamount]=useState()
 const [cart,setCart]=useCart()
 const[auth]=useAuth()
+const[payment,setPayment]=useState()
+
 const deleteFromCart=(index)=>{
     let myCart = [...cart]
   const remainItem=myCart.filter((val,ind)=>index !== ind)
@@ -28,7 +30,7 @@ const totalAmount=()=>{
   const handlePayment=async()=>{
     const {data} = await axios.get("http://localhost:8000/auth/api/order/getkey")
   const {data:{order}} = await axios.post("http://localhost:8000/auth/api/order/checkout",{amount})
-  console.log(window);
+
   
   const options = {
     "key": data.key, // Enter the Key ID generated from the Dashboard
@@ -38,7 +40,15 @@ const totalAmount=()=>{
     "description": "Test Transaction",
     "image": "https://example.com/your_logo",
     "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    "callback_url": "http://localhost:8000/auth/api/order/paymentvarification",
+    // "callback_url": "http://localhost:8000/auth/api/order/payment_varification",
+    "handler": async function (response){
+    const razorpay_payment_id= await response.razorpay_payment_id
+     const razorpay_order_id= await response.razorpay_order_id
+     const razorpay_signature= await response.razorpay_signature
+     const userid=auth.user.id
+    const {data}=   await axios.post("http://localhost:8000/auth/api/order/payment_varification",{razorpay_payment_id,razorpay_order_id,razorpay_signature,userid,cart,address})
+     setPayment(data.success)
+  },
     "prefill": {
         "name": auth.user.name,
         "email": auth.user.email,
@@ -53,21 +63,27 @@ const totalAmount=()=>{
 };
 
 
-const razor = window.Razorpay(options);
+ const razor = new window.Razorpay(options);
 
-    razor.open();
-  
-  // localStorage.removeItem('cart')
-  // setCart([])
-  // navigate('/dashboard/orders')
-  console.log('ffyugjhftr');
-  
+     razor.open();
+
   }
+  useEffect(()=>{
+    if(payment===true){
+      localStorage.removeItem('cart')
+     setCart([])
+     navigate('/dashboard/orders')
+    }
+    else{
+      navigate('/cart') 
+    }
+  },[payment])
+  
  useEffect(()=>{totalAmount()},[cart])
   return (
     <Layout title='cart'>
         <div className="container">
-            <div className="row mt-3 mx-auto ">
+            <div className="row  mx-auto ">
                 <div className='col-md-10 col-10 '>
                     <div className='mx-auto' >Total {cart.length} item in  your cart</div>
                 </div>
@@ -83,9 +99,9 @@ const razor = window.Razorpay(options);
                     <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} className="card-img-top img-fluid" alt="..." />
                     <div className="card-body">
                       {val.names}
-                      <p className="card-text">{val.description}</p>
+                      <p className="card-text">{val.description.slice(1,28)}</p>
                       <div>Price {val.price}</div>
-                      <div>Price {val.category.names}</div>
+                     
                       
                     </div>
                     <div className='card-footer d-flex'>
@@ -101,19 +117,21 @@ const razor = window.Razorpay(options);
               })}  
                 </div>
                 </div>
-                <div className="col-md-4 col-4">
+              {
+                 <div className="col-md-4 col-4">
                   <div>Total Amount : {amount}</div>
                   <div>Address</div>
                   <textarea className='form-control mb-2' placeholder='Street/City/State/PinCode' value={address} onChange={(e)=>{setAddress(e.target.value)}} required/>
                   {
                 auth?.user? ( <div className='mt-2'>
                  
-                  <button className='btn btn-primary' onClick={()=>handlePayment()}>Make Payment</button>
+                  <button className='btn btn-primary' disabled={!address|| !amount} onClick={()=>handlePayment()}>Make Payment</button>
                 </div>)
                 :(<button className='btn btn-outline-primary' onClick={()=>{navigate('/login',{state:'/cart'})}}>Login to Proceed</button>) 
                     }
                
                 </div> 
+              }
                              
             </div>
         </div>

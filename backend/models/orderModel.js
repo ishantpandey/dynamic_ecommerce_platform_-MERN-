@@ -1,23 +1,27 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-    products:{
+    products:[{
         type:mongoose.ObjectId,
         ref:"Product"
+    }],
+    orderid:{
+        type:String
     },
-    payment:{},
+    paymentid:{
+        type:String
+    },
+    paysignatureid:{
+        type:String
+    },
     buyer:{
         type:mongoose.ObjectId,
         ref:"users"
     },
-    status:{
-        type: String,
-        default:"Not Process",
-        enum:["Not Prosess","Processing","Shipped","Deliverd","Cancel"]
-    },
+  
     address:{
         type:String,
-        require:true
+       
     }
 },{timestamps:true})
 

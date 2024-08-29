@@ -2,11 +2,15 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Layout from '../components/Layout/Layout'
+import {  toast } from 'react-toastify';
+import { useCart } from '../context/cartContext';
+
 
 const ProductDetails = () => {
   const navigate = useNavigate()
     const [product,setProduct]=useState({})
     const [relatedproduct,setRelatedproduct]=useState([])
+    const [cart,setCart]=useCart()
     const param = useParams()
     const productDetails=async()=>{
         const {data} = await axios.get(`http://localhost:8000/auth/api/product/single-product/${param.slug}`)
@@ -20,6 +24,11 @@ const ProductDetails = () => {
      console.log(data);
       
     }
+    const addToCart=(val)=>{
+      setCart([...cart,val])
+      localStorage.setItem('cart',JSON.stringify([...cart,val]))
+      toast.success('Item Added')
+   }
     useEffect(()=>{ productDetails()},[param?.slug])
     
   return (
@@ -42,7 +51,7 @@ const ProductDetails = () => {
      {product.category?.names}
      </div>
      <div>
-     {product.description}
+     <p>{product.description}</p>
      </div>
      <div>
      {product.price}
@@ -50,7 +59,7 @@ const ProductDetails = () => {
      <div>
      {product.shipping}
      </div>
-     <button className='btn btn-outline-warning '>Add to Cart</button>
+     <button className='btn btn-outline-warning ' onClick={()=>{addToCart(product)}} >Add to Cart</button>
      </div>
    </div>
  </div>
@@ -63,7 +72,7 @@ const ProductDetails = () => {
                     <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} className="card-img-top img-fluid" alt="..." />
                     <div className="card-body">
                       {val.names}
-                      <p className="card-text">{val.description}</p>
+                      <p className="card-text">{val.description.slice(1,28)}</p>
                       <div>Price {val.price}</div>
                       <div>Price {val.category.names}</div>
                       

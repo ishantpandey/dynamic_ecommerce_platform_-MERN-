@@ -56,7 +56,7 @@ const Header = () => {
         </li>
        
         <li className="nav-item" >
-          <NavLink style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/profile">Profile</NavLink>
+          <NavLink style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/dashboard/orders">Orders</NavLink>
         </li>
         <li  className="nav-item" >
         <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link "  aria-current="page" to={`/cart`}>Cart</NavLink>
@@ -64,13 +64,19 @@ const Header = () => {
       
      {auth.token? 
        <>
-        <li  className="nav-item" >
-        <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link "  aria-current="page" to={`/dashboard/${auth?.user?.role===1 ? 'admin':''}`}>{auth.user.name}</NavLink>
+        <li class="nav-item dropdown">
+        <Link class="nav-link dropdown-toggle" to="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {auth.user.name}
+        </Link>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <NavLink class="dropdown-item"   className="nav-link "  aria-current="page" to={`/dashboard/${auth?.user?.role===1 ? 'admin':''}`}>{auth.user.name}</NavLink>
+                {/* <Link class="dropdown-item"  to={`/category/${val.slug}`}></Link> */}
+                <NavLink class="dropdown-item" style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link " onClick={handleLogout} aria-current="page" to="/login">Logout</NavLink>
+         </div>
+         
       </li>
+       
      
-      <li  className="nav-item" >
-        <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link " onClick={handleLogout} aria-current="page" to="/login">Logout</NavLink>
-      </li>
        </> :
       <li className="nav-item" >
       <NavLink style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/login">Login</NavLink>
