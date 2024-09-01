@@ -6,6 +6,9 @@ const categorySchema=mongoose.Schema({
         require:true,
         unique:true
     },
+    img:{
+        type:String
+    },
     slug :{
         type:String,
         require:true

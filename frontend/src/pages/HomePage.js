@@ -159,7 +159,7 @@ Prices?.map((val) => {
             category?.map((val)=>{
               return(
                <div class="item"><Link class="dropdown-item " key={val._id} to={`/category/${val.slug}`}>
-                <img src="https://assets.ajio.com/medias/sys_master/root/20231011/t3j8/65267860ddf779151932c1ee/-473Wx593H-466696477-multi-MODEL.jpg" className='img img-fluid' alt="" />
+                <img src={val.img} className='img img-fluid' alt="" />
                 <div>{val.names}</div>
                 </Link></div>
                 
@@ -189,7 +189,7 @@ Prices?.map((val) => {
           
             
         <div className="container-fluid">
-  <div className="row justify-content-center shadow mx-auto  product-card" style={{ paddingLeft: '0', paddingRight: '0' }}>
+  <div className="row justify-content-center shadow   product-card" style={{ paddingLeft: '0', paddingRight: '0' }}>
     {products?.map((val, id) => (
       <Card key={id} slug={val.slug} pid={val._id} price={val.price} />
     ))}

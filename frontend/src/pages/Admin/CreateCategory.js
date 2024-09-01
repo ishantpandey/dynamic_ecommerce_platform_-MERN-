@@ -9,6 +9,7 @@ import CategoryModal from '../../components/Layout/CategoryModal'
 const CreateCategory = () => {
   const[cat,setcat]=useState([])
   const [names,setNames]=useState()
+  const [img,setimg]=useState()
   const [upval,setupval]=useState()
   const [catId,setcatId]=useState()
   const [showModal,setShowModal]=useState(false)
@@ -26,11 +27,12 @@ const CreateCategory = () => {
     e.preventDefault()
      try {
       
-      const {data}=await axios.post("http://localhost:8000/auth/api/category/create-category",{names})
+      const {data}=await axios.post("http://localhost:8000/auth/api/category/create-category",{names,img})
       console.log(data);
       if(data?.success){
         getCategory()
         setNames('')
+        setimg('')
         toast.success('Created')
       }
      } catch (error) {
@@ -86,7 +88,7 @@ const CreateCategory = () => {
               <AdminPanel/>
             </div>
             <div className="col-md-6 col-6 col-sm-6 center">
-              <FormCategory handleSubmit={handleSubmit} names={names} setNames={setNames}  />
+              <FormCategory handleSubmit={handleSubmit} image={img} setimg={setimg} names={names} setNames={setNames}  />
            <div className='w-60'>
            <table class="table">
   <thead>

@@ -83,18 +83,18 @@ const totalAmount=()=>{
   return (
     <Layout title='cart'>
         <div className="container">
-            <div className="row  mx-auto ">
-                <div className='col-md-10 col-10 '>
+            <div className="row my-auto mx-auto ">
+                <div className='col-md-10 col-10 p-3 '>
                     <div className='mx-auto' >Total {cart.length} item in  your cart</div>
                 </div>
             </div>
             <div className="row mx-auto">
-                <div className="col-md-8 ">
+                <div className="col-md-8 col-10 mx-auto pb-2">
                   <div className='row'>
                 {cart?.map((val,ind) => {
                 return (
                   // <Link key={val._id} to={`/dashboard/admin/update-product/${val.slug}`}>
-                  <div className="col-md-4 ">
+                  <div className="col-md-4 col-11 mx-auto ">
                   <div className="card" key={ind} style={{ width: '15rem' }}>
                     <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} className="card-img-top img-fluid" alt="..." />
                     <div className="card-body">
@@ -118,12 +118,12 @@ const totalAmount=()=>{
                 </div>
                 </div>
               {
-                 <div className="col-md-4 col-4">
-                  <div>Total Amount : {amount}</div>
-                  <div>Address</div>
-                  <textarea className='form-control mb-2' placeholder='Street/City/State/PinCode' value={address} onChange={(e)=>{setAddress(e.target.value)}} required/>
+                 <div className="col-md-4 col-10 mx-auto bg-light pt-3">
+                  <div className='pt-1'>Total Amount : {amount}</div>
+                  <div className='pt-1 pb-1'>Address</div>
+                  <textarea className='form-control mb-2 pb-3' placeholder='Street/City/State/PinCode' value={address} onChange={(e)=>{setAddress(e.target.value)}} required/>
                   {
-                auth?.user? ( <div className='mt-2'>
+                auth?.user? ( <div className='mt-3'>
                  
                   <button className='btn btn-primary' disabled={!address|| !amount} onClick={()=>handlePayment()}>Make Payment</button>
                 </div>)
@@ -138,5 +138,4 @@ const totalAmount=()=>{
     </Layout>
   )
 }
-
 export default Cart

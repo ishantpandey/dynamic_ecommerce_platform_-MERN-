@@ -1,44 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout/Layout'
 import axios from 'axios'
-import { useNavigate, useParams } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
+import Card from './Card'
 
 const ByCategory = () => {
   const {slug}=useParams()
   const[products,setProducts]=useState()
-    const navigate=useNavigate()
+  const[cate,setcate]=useState('')
+   
     const byCategory=async()=>{
       const {data} = await axios.get(`http://localhost:8000/auth/api/product/category-product/${slug}`)
+     console.log(data);
      
        setProducts(data)
+       setcate(data[0]?.category.names)
    
     }
     useEffect(()=>{byCategory()},[slug])
   return (
     <Layout>
-         <div className="container">
-        <div className="row center mt-5">
-        
-          <div className="col-md-8 mx-auto">
-          {console.log(products?.length)}
+         <div className="container-fluid">
+        <div className="row center mt-2">
+        {<h2>{cate}</h2>}
+          <div className="col-md-8 mx-auto mt-2">
+          
             <div className="row mx-auto">
-              {products?.map((val) => {
+              {products?.map((val,id) => {
+               
                 return (
-                  // <Link key={val._id} to={`/dashboard/admin/update-product/${val.slug}`}>
-                  <div className="card" style={{ width: '15rem' }}>
-                    <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} className="card-img-top img-fluid" alt="..." />
-                    <div className="card-body">
-                      {val.names}
-                      <p className="card-text">{val.description}</p>
-                      <div>Price {val.price}</div>
-                      <div>Price {val.category.names}</div>
-                    </div>
-                    <div className='card-footer d-flex'>
-                      <button className='btn btn-outline-secondary me-2' onClick={()=>{navigate(`/product-details/${val.slug}`)}}>More Details</button>
-                      <button className='btn btn-outline-warning '>Add to Cart</button>
-                    </div>
-                  </div>
-                  // </Link>
+                
+                  
+                  <Card key={id} slug={val.slug} pid={val._id} price={val.price}  />
+                
 
 
                 )

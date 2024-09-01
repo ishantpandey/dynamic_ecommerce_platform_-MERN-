@@ -4,7 +4,7 @@ const slugify =require('slugify')
 
 //------------------------------Create Category-------------------
 const createCategory=async(req,res)=>{
-    const{names} =req.body
+    const{names,img} =req.body
     
    try {
     const existCategory= await CategoryData.findOne({names})
@@ -13,7 +13,7 @@ const createCategory=async(req,res)=>{
         return res.status(200).send({success:true,msg:'category already exist'})
     }
     else{
-        const create = await new CategoryData({names,slug:slugify(names)}).save()
+        const create = await new CategoryData({names,img,slug:slugify(names)}).save()
         return res.status(200).send({success:true,msg:'created'})
     }
    } catch (error) {

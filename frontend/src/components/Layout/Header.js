@@ -15,7 +15,7 @@ const Header = () => {
   }
   return (
     <>
-    <nav className="navbar navbar-expand-sm navbar-light shadow ">
+    <nav className="navbar navbar-expand-sm navbar-light  ">
   <div className="container-fluid mx-3 ">
    <div className='d-flex left-content '>
    {/* <img src={logo} className='logo-img img img-fluid' alt=''/> */}

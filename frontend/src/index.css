@@ -157,13 +157,20 @@ body{
   .select-box select {
 	background-color: rgb(243, 236, 227);
 	color: rgb(46, 60, 210);
-	padding: 8px;
+	padding-left: 20px;
 	width: 90px;
 	border: none;
-	font-size: 20px;
+	font-size: 18px;
+	outline: none;
+  }
+  .select-box select ::after{
+	background-color: rgb(243, 236, 227);
+	color: rgb(46, 60, 210);
+	padding-left: 8px;
 	
-	-webkit-appearance: button;
-	appearance: button;
+	width: 120px;
+	border: none;
+	font-size: 16px;
 	outline: none;
   }
   /*-----------scrolling horizontal------------------*/

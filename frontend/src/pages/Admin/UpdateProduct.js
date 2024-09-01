@@ -98,7 +98,7 @@ const UpdateProduct = () => {
   return (
     <Layout title='create product'>
          <div className="container">
-        <div className="row center mt-5">
+        <div className="row center mt-3">
             <div className="col-md-4 center">
               <AdminPanel/>
             </div>
