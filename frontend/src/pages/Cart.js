@@ -94,6 +94,7 @@ const totalAmount=()=>{
                 {cart?.map((val,ind) => {
                 return (
                   // <Link key={val._id} to={`/dashboard/admin/update-product/${val.slug}`}>
+                 <>
                   <div className="col-md-4 col-11 mx-auto ">
                   <div className="card" key={ind} style={{ width: '15rem' }}>
                     <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} className="card-img-top img-fluid" alt="..." />
@@ -110,6 +111,7 @@ const totalAmount=()=>{
                     </div>
                   </div>
                   </div>
+                 </>
                   // </Link>
 
 
@@ -123,7 +125,7 @@ const totalAmount=()=>{
                   <div className='pt-1 pb-1'>Address</div>
                   <textarea className='form-control mb-2 pb-3' placeholder='Street/City/State/PinCode' value={address} onChange={(e)=>{setAddress(e.target.value)}} required/>
                   {
-                auth?.user? ( <div className='mt-3'>
+                auth?.user? ( <div className='mt-3 mb-5'>
                  
                   <button className='btn btn-primary' disabled={!address|| !amount} onClick={()=>handlePayment()}>Make Payment</button>
                 </div>)

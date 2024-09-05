@@ -36,16 +36,16 @@ const ProductDetails = () => {
   return (
     <Layout>
     <div className="container">
-   <div className="row center mt-5">
+   <div className="row center mt-3">
    
-     <div className="col-md-6 col-6 mx-auto">
-     <img src={`http://localhost:8000/auth/api/product/productimg/${product._id}`} className=" img-fluid" width='400px' height='500px' alt="..." />
+     <div className="col-md-6 col-6 m-3">
+     <img src={`http://localhost:8000/auth/api/product/productimg/${product._id}`} className=" img-fluid" width='500px' height='700px' alt="..." />
        
         </div>
      
       
     
-     <div className='col-md-6 col-10'>
+     <div className='col-md-5 col-10 mb-3'>
      <div>
      {product.names}
      </div>
@@ -66,6 +66,7 @@ const ProductDetails = () => {
    </div>
  </div>
 
+  <div className="container">
   <div className="row mx-auto mt-3 ">
               {relatedproduct?.map((val,id) => {
                 return (
@@ -75,6 +76,7 @@ const ProductDetails = () => {
                 )
               })}
             </div>
+  </div>
 
 </Layout>
   )

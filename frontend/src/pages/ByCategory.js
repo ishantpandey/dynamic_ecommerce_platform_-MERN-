@@ -11,7 +11,7 @@ const ByCategory = () => {
    
     const byCategory=async()=>{
       const {data} = await axios.get(`http://localhost:8000/auth/api/product/category-product/${slug}`)
-     console.log(data);
+     
      
        setProducts(data)
        setcate(data[0]?.category.names)
@@ -23,7 +23,7 @@ const ByCategory = () => {
          <div className="container-fluid">
         <div className="row center mt-2">
         {<h2>{cate}</h2>}
-          <div className="col-md-8 mx-auto mt-2">
+          <div className="col-md-10 mx-auto mt-2">
           
             <div className="row mx-auto">
               {products?.map((val,id) => {

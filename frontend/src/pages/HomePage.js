@@ -24,6 +24,9 @@ const HomePage = () => {
   const[page,setpage]=useState(1)
   const[loading,setloading]=useState(false)
   const category = useCategory()
+  const[fifty,setFifty]=useState()
+  const[electronics,setElectronics]=useState()
+  
 
 
   //---------------get total item------------
@@ -101,7 +104,7 @@ const loadMore=async()=>{
       const {data}= await axios.post("http://localhost:8000/auth/api/product/filter-product",{radio,checked})
       if(data?.success){
           setproducts(data.product)
-          console.log(data);
+        
      
      }
      else{
@@ -112,7 +115,25 @@ const loadMore=async()=>{
   }
   }
   //-----------------add to cart--------
+ //----------------------Category Based------
+ const byFiftyCategory=async()=>{
+  const {data} = await axios.get(`http://localhost:8000/auth/api/product/category-product/50percent-OFF`)
+ console.log(data);
  
+   setFifty(data)
+  
+
+}
+useEffect(()=>{byFiftyCategory()},[])
+const byElectonicsCategory=async()=>{
+  const {data} = await axios.get(`http://localhost:8000/auth/api/product/category-product/Electronics`)
+ console.log(data);
+ 
+   setElectronics(data)
+  
+
+}
+useEffect(()=>{byElectonicsCategory()},[])
 
   useEffect(()=>{
     getCategory()   
@@ -126,41 +147,21 @@ const loadMore=async()=>{
   
   return (
     <Layout title='home' className='layout'>
-      <div className="row">
-        <Carousel/>
-      </div>
+     
      
 
 <div className="row ">
-          <div className="col-md-1 col-2 my-auto mx-auto">
-              
-            
-<div className='select-box'>
-<select  onChange={(e) => setRadio(e.target.value)}>
-  <option selected>Price</option>
- {
-Prices?.map((val) => {
-  return (
-  <option value={val.array}>{val.name}</option>
-  )
-  
-})
-}
-<option onClick={()=>{window.location.reload()}}>Reset</option>
- </select>
-</div>
- 
+         
+      <div className="col-md-11 mt-2 mb-3  mx-auto">
       
-          </div>
-          <div className="col-md-11 col-10">
           <div class="horizontal-scroll">
-          <div class="horizontal-bar">
+          <div class="horizontal-bar p-3 ">
           {
             category?.map((val)=>{
               return(
                <div class="item"><Link class="dropdown-item " key={val._id} to={`/category/${val.slug}`}>
                 <img src={val.img} className='img img-fluid' alt="" />
-                <div>{val.names}</div>
+                <div className='mt-2'><h6>{val.names}</h6></div>
                 </Link></div>
                 
               )
@@ -168,7 +169,7 @@ Prices?.map((val) => {
           }
    
    
-</div>
+
 
 </div>
 
@@ -183,18 +184,101 @@ Prices?.map((val) => {
                 })
               } */}
           </div>
+      </div>
         </div>
 
-       
-          
-            
-        <div className="container-fluid">
-  <div className="row justify-content-center shadow   product-card" style={{ paddingLeft: '0', paddingRight: '0' }}>
-    {products?.map((val, id) => (
+        <div className="row">
+          <div className="col-md-11 mx-auto"><Carousel/></div>
+        
+      </div>
+      {/* <div className="row">
+        <div className="col-md-10 ml-3">
+        <div className='select-box'>
+<select  onChange={(e) => setRadio(e.target.value)}>
+  <option selected>Price</option>
+ {
+Prices?.map((val) => {
+  return (
+  <option value={val.array}>{val.name}</option>
+  )
+  
+})
+}
+<option onClick={()=>{window.location.reload()}}>Reset</option>
+ </select>
+</div>
+        </div>
+     
+        </div>     */}
+            <div className="row mt-3  ">
+              <div className="col-md-11   mx-auto">
+                
+             <div className="container-fluid">
+             
+             <div className="row card-product  " >
+             <div className='p-3'><h4>Pick up where you left off</h4></div>
+   {electronics?.map((val, id) => (
       <Card key={id} slug={val.slug} pid={val._id} price={val.price} />
     ))}
+   
   </div>
-</div>
+             </div>
+              </div>
+            </div>
+
+  <div className="row mt-3">
+    <div className="col-md-11 mx-auto">
+     <div className="container-fluid  ">
+     <div className="row " >
+      <div className="col-md-6 bg-warning card-product  ">
+        <div className="row">
+        <div className='p-3'><h4>Best Deals With Offers</h4></div>
+        {
+          fifty?.map((val,id)=>{
+            return(
+              <div className="col-md-5 col-5 mr-3 mb-2 mx-auto"><Card key={id} slug={val.slug} pid={val._id} price={val.price}  /></div>
+              
+            )
+          })
+        }
+          
+        </div>
+      </div>
+      <div className=' col-md-1'></div>
+      <div className="col-md-5  card-product ">
+         <div className="row ">
+         <div className='p-3'><h4>Minimum 50% off</h4></div>
+         {
+          fifty?.map((val,id)=>{
+            return(
+              <div className="col-md-5 col-5 ml-3 mx-auto"><Card key={id} slug={val.slug} pid={val._id} price={val.price}  /></div>
+              
+            )
+          })
+        }
+         
+        </div>
+      </div>
+      </div>
+     </div>
+    </div>
+  </div>
+  
+  <div className="row mt-3  ">
+              <div className="col-md-11   mx-auto">
+                
+             <div className="container-fluid">
+             
+             <div className="row card-product  " >
+             <div className='p-3'><h4>Keep shopping for</h4></div>
+   {products?.map((val, id) => (
+      <Card key={id} slug={val.slug} pid={val._id} price={val.price} />
+    ))}
+   
+  </div>
+             </div>
+              </div>
+            </div>
 
 
             

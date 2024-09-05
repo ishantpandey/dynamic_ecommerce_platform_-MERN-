@@ -15,7 +15,7 @@ const createProduct=async(req,res)=>{
     const {photo}=req.files;
    
    const product=new ProductModel({...req.fields,slug:slugify(names)})
-   console.log(product);
+  
    if(photo){
    
       product.photo.data=fs.readFileSync(photo.path)
@@ -57,7 +57,7 @@ const updateProduct=async(req,res)=>{
 const AllProduct=async(req,res)=>{
    
    try {
-      const product = await ProductModel.find({}).select("-photo").limit(10).populate("category")
+      const product = await ProductModel.find({}).select("-photo").populate("category")
       if(product){
          res.status(200).send({success:true,msg:"all product",product})
       }

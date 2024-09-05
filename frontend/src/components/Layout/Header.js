@@ -3,11 +3,11 @@ import { Link, NavLink } from 'react-router-dom'
 import { useAuth } from '../../context/auth'
 import { toast } from 'react-toastify'
 import SearchInput from './SearchInput'
-import useCategory from '../Custom hook/useCategory'
+
 
 const Header = () => {
   const[auth,setauth]=useAuth()
-  const category = useCategory()
+  
   const handleLogout=()=>{
     setauth({...auth,user:null,token:''})
     localStorage.removeItem('auth')
@@ -18,8 +18,8 @@ const Header = () => {
     <nav className="navbar navbar-expand-sm navbar-light  ">
   <div className="container-fluid mx-3 ">
    <div className='d-flex left-content '>
-   {/* <img src={logo} className='logo-img img img-fluid' alt=''/> */}
-<strong><h3>Keep Shop</h3></strong>
+ 
+<strong><img src='https://cdn-icons-png.flaticon.com/128/14063/14063185.png' width="50px" height="45px"/>KeepShop</strong>
    </div>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span className="navbar-toggler-icon"></span>
@@ -34,32 +34,17 @@ const Header = () => {
         <li className="nav-item me-5" >
          <SearchInput/>
         </li>
-        <li class="nav-item dropdown">
-        <Link class="nav-link dropdown-toggle" to="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          All Category
-        </Link>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          {
-            category?.map((val)=>{
-              return(
-                <Link class="dropdown-item" key={val._id} to={`/category/${val.slug}`}>{val.names}</Link>
-              )
-            })
-          }
-          
-         </div>
-         
-      </li>
+       
 
         <li className="nav-item" >
-          <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/">Home</NavLink>
+          <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/"><h6>Home</h6></NavLink>
         </li>
        
         <li className="nav-item" >
-          <NavLink style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/dashboard/orders">Orders</NavLink>
+          <NavLink style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/dashboard/orders"><h6>Orders</h6></NavLink>
         </li>
         <li  className="nav-item" >
-        <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link "  aria-current="page" to={`/cart`}>Cart</NavLink>
+        <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link "  aria-current="page" to={`/cart`}><h6>Cart</h6></NavLink>
       </li>
       
      {auth.token? 
@@ -69,9 +54,9 @@ const Header = () => {
         {auth.user.name}
         </Link>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <NavLink class="dropdown-item"   className="nav-link "  aria-current="page" to={`/dashboard/${auth?.user?.role===1 ? 'admin':''}`}>{auth.user.name}</NavLink>
-                {/* <Link class="dropdown-item"  to={`/category/${val.slug}`}></Link> */}
-                <NavLink class="dropdown-item" style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link " onClick={handleLogout} aria-current="page" to="/login">Logout</NavLink>
+        <NavLink class="dropdown-item"   className="nav-link "  aria-current="page" to={`/dashboard/${auth?.user?.role===1 ? 'admin':''}`}><h6>{auth.user.name}</h6></NavLink>
+               
+                <NavLink class="dropdown-item" style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link " onClick={handleLogout} aria-current="page" to="/login"><h6>Logout</h6></NavLink>
          </div>
          
       </li>
@@ -79,7 +64,7 @@ const Header = () => {
      
        </> :
       <li className="nav-item" >
-      <NavLink style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/login">Login</NavLink>
+      <NavLink style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/login"><h6>Login</h6></NavLink>
     </li> 
 }
      

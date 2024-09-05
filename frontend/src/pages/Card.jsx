@@ -12,7 +12,9 @@ const Card = ({slug,pid,price}) => {
           className="product-img" 
           alt="Product Image" 
         />
-        <div>Price {price}</div>
+        <div ><h5 style={{ display: 'flex',flexDirection:'row', justifyContent: 'center',alignItems:'center' }}><span class="material-symbols-outlined">
+currency_rupee
+</span>{price}</h5> </div>
       </div>
     </Link>
   </div>
