@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react'
 import { useAuth } from '../../context/auth'
 import { Outlet } from 'react-router-dom'
-import Spinner from '../../pages/Spinner'
+
 import axios from 'axios'
+import Login from '../../pages/authPage/Login'
 
 const PrivateRoute = () => {
     const[auth,setauth]=useAuth()
@@ -23,7 +24,7 @@ const PrivateRoute = () => {
         
     },[auth?.token])
    
-  return  ok? <Outlet/> : <Spinner/> 
+  return  ok? <Outlet/> : <Login/> 
   
 }
 

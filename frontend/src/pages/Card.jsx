@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Card = ({slug,pid,price}) => {
   return (
-<div className='col-md-3  col-5 mx-auto product-card '>
+<div className='col-md-3 mt-2 col-5 mx-auto product-card '>
   <div className='mx-auto' style={{ display: 'flex',flexDirection:'row', justifyContent: 'center' }}>
     <Link className='product-main' to={`/product-details/${slug}`}>
       <div className="product">

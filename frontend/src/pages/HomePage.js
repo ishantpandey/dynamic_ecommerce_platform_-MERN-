@@ -251,7 +251,7 @@ Prices?.map((val) => {
          {
           fifty?.map((val,id)=>{
             return(
-              <div className="col-md-5 col-5 ml-3 mx-auto"><Card key={id} slug={val.slug} pid={val._id} price={val.price}  /></div>
+              <div className="col-md-5 col-5  mx-auto"><Card key={id} slug={val.slug} pid={val._id} price={val.price}  /></div>
               
             )
           })
@@ -282,7 +282,7 @@ Prices?.map((val) => {
 
 
             
-             <div className='loadMore'>
+             <div className='loadMore mb-3'>
               {products && products.length<total && !checked.length && !radio.length && (
                 <button className='btn btn-secondary' onClick={(e)=>{
                   e.preventDefault()

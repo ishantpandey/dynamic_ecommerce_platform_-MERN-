@@ -82,58 +82,107 @@ const totalAmount=()=>{
  useEffect(()=>{totalAmount()},[cart])
   return (
     <Layout title='cart'>
+      
         <div className="container">
-            <div className="row my-auto mx-auto ">
-                <div className='col-md-10 col-10 p-3 '>
-                    <div className='mx-auto' >Total {cart.length} item in  your cart</div>
-                </div>
-            </div>
-            <div className="row mx-auto">
-                <div className="col-md-8 col-10 mx-auto pb-2">
-                  <div className='row'>
+           
+            <div className="row  mx-auto mt-3">
+                <div className="col-md-7 mb-2  col-12 mx-auto ">
+                <div className="row mb-2 card-product shadow" style={{borderRadius:'2px'}}>
+                  <div className="cart-add-more p-3">
+                  <div className='mx-auto fs-5' >Total {cart.length} Item In  Your Cart</div> 
+                  </div>
+                
+              </div>
+                 
+                  <div className='row pt-4 card-product shadow' style={{borderRadius:'2px'}}>
                 {cart?.map((val,ind) => {
                 return (
-                  // <Link key={val._id} to={`/dashboard/admin/update-product/${val.slug}`}>
+                  
                  <>
-                  <div className="col-md-4 col-11 mx-auto ">
-                  <div className="card" key={ind} style={{ width: '15rem' }}>
-                    <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} className="card-img-top img-fluid" alt="..." />
-                    <div className="card-body">
-                      {val.names}
-                      <p className="card-text">{val.description.slice(1,28)}</p>
-                      <div>Price {val.price}</div>
-                     
+                  <div className="col-md-12 col-11 mx-auto  ">
+                   
+                    <div className="row">
+                      <div className="col-md-3 col-6 mx-auto ">
+                      <img src={`http://localhost:8000/auth/api/product/productimg/${val._id}`} style={{width:'170px',height:'130px'}} className="card-img-top img-fluid" alt="..." />
+                      </div>
+                      <div className="col-md-4 col-6 mx-auto">
+                      <div className="" >
+                        <div style={{fontWeight:'400',fontSize:'18px'}}>
+                        {val.names}
+                        </div>
+                    
+                      <p className=""style={{fontWeight:'400',fontSize:'15px'}}>{val.description.slice(1,38)}...</p>
+                      <div className='mb-1' style={{fontWeight:'500',fontSize:'18px'}}>Price {val.price}</div>
+                      </div>
+                      </div>
+                      <div className="col-md-4 col-10 mx-auto gx-1">
+                      <div className=' d-flex'>
+                      <button className='btn btn-outline-secondary me-2' onClick={()=>{navigate(`/product-details/${val.slug}`)}}>More Details</button>
+                      <button className='btn btn-outline-danger ' onClick={()=>{deleteFromCart(ind)}} >Delete</button>
                       
                     </div>
-                    <div className='card-footer d-flex'>
-                      <button className='btn btn-outline-secondary me-2' onClick={()=>{navigate(`/product-details/${val.slug}`)}}>More Details</button>
-                      <button className='btn btn-outline-warning ' onClick={()=>{deleteFromCart(ind)}} >Delete</button>
+                      </div>
+                      
                     </div>
-                  </div>
-                  </div>
+                    <hr></hr>
+                    </div>
+                   
                  </>
-                  // </Link>
-
-
                 )
-              })}  
+              })} 
+              
                 </div>
+                
+                <div className="row shadow card-product" style={{borderRadius:'2px'}}>
+                  <div className="cart-add-more p-3">
+                  <button onClick={()=>navigate('/')}>Add More</button> 
+                  </div>
+                
+              </div>
+                
                 </div>
-              {
-                 <div className="col-md-4 col-10 mx-auto bg-light pt-3">
-                  <div className='pt-1'>Total Amount : {amount}</div>
-                  <div className='pt-1 pb-1'>Address</div>
+              
+                 <div className="col-md-4 col-12 mx-auto mb-5 gx-2">
+                 <div className='card-product shadow' style={{borderRadius:'2px'}}>
+                 <div className='p-3 pb-1 fs-6'style={{fontWeight:'500',fontSize:'16px'}}>Price Details</div>
+                  <hr/>
+                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                    <div>Prices ({cart.length} items)</div>
+                    <div className='me-3'> {amount}</div>
+                  </div>
+                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                    <div>Platform Fees</div>
+                    <div className='me-3'> 5</div>
+                  </div>
+                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                    <div>Delivery Charges</div>
+                    <div className=''> <del className='me-3'>40 </del> <span className='text-success fs-6 me-3'> Free</span></div>
+                  </div>
+                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                    <div>Total Amount</div>
+                    <div className='me-3'> {amount}</div>
+                  </div>
+                  
+                  <div className='p-2 pb-1 ms-3'>Address</div>
                   <textarea className='form-control mb-2 pb-3' placeholder='Street/City/State/PinCode' value={address} onChange={(e)=>{setAddress(e.target.value)}} required/>
-                  {
-                auth?.user? ( <div className='mt-3 mb-5'>
+                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+                    <div className='fs-5'><span className='me-1'>₹</span>{amount+5}</div>
+                    <div className='me-3'>
+                    {
+                auth?.user? ( 
+                <div className='mb-1 cart-payment-btn'>
                  
-                  <button className='btn btn-primary' disabled={!address|| !amount} onClick={()=>handlePayment()}>Make Payment</button>
+                  <button className='btn btn-primary' disabled={!address|| !amount || address.length<25} onClick={()=>handlePayment()}>Make Payment</button>
                 </div>)
                 :(<button className='btn btn-outline-primary' onClick={()=>{navigate('/login',{state:'/cart'})}}>Login to Proceed</button>) 
                     }
+                    </div>
+                  </div>
+                 
+                 </div>
                
                 </div> 
-              }
+              
                              
             </div>
         </div>

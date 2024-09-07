@@ -6,7 +6,7 @@ body{
  
 }
 .body-section{
-	background-color: rgb(240, 243, 245);
+	background-color: rgb(236, 240, 242);
 	width: 100%;
 	overflow: hidden
 }
@@ -94,26 +94,50 @@ body{
 	background-color: #ffffff;
 	width: 100%;
 }
+.navbar{
+	border-bottom: 1px solid rgb(220, 218, 216);
+	box-shadow: 0 4px 2px -4px rgba(0, 0, 0, 0.2);
+}
 
 /*------------------ Footer------------ */
 .footer{
 	width: 100%;
 	height: auto;
-	position: fixed;
 	top: 95vh;
 	
 }
 .footer-main{
 	width: 100%;
-	
 	height: auto;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
 	align-items: center;
-	display: none;
+
+}
+.footer-main-lgscreen{
+	width: 100%;
+	height: auto;
+	color: #fff;
+	
+}
+.footer-section ul{
+	list-style: none;
+	text-decoration: none; /* Removes underline */
+	color: inherit;
+	line-height: 25px;
+}
+.contact-info{
+	line-height: 20px;
 }
 @media (max-width:630px){
+	.footer{
+		width: 100%;
+		height: auto;
+		position: fixed;
+		top: 95vh;
+		
+	}
 	.footer-main{
 		width: 100%;
 		padding: 7px;
@@ -124,16 +148,19 @@ body{
 		align-items: center;
 		background-color: #ffffff;
 	}	
+	.footer-main-lgscreen{
+		display: none;
+		
+	}
 	
 }
 @media (min-width:670px){
-	.footer{
-		display: none;
-	}
+	
 	.footer-main{
 		display: none;
 		
-	}	
+	}
+		
 	}
 
 /*-------------- load More -----------------*/
@@ -141,6 +168,8 @@ body{
 	display: flex;
 	flex-direction: row-reverse;
 	margin: 15px;
+	padding-bottom: 20px;
+	
 	
 }
 
@@ -168,14 +197,14 @@ body{
 .product-main{
 	padding: 0%;
 	text-decoration: none;
-	height: 280px;
-	width: 280px;
+	height: 250px;
+	width: 250px;
 	background-color: #fff;
 	border-bottom: 2px solid rgb(191, 189, 189);
 }
 .product{
-	height: 280px;
-	width: 280px;
+	height: 250px;
+	width: 250px;
 	border: none;
 	display: flex;
 	flex-direction: column;
@@ -278,6 +307,47 @@ body{
 .horizontal-bar::-webkit-scrollbar {
     height: 8px; /* Height of the horizontal scrollbar */
 }
-/*------------carousel------------*/
+/*------------cart-add-more------------*/
 
+.cart-add-more{
+display: flex;
+justify-content: right;
+
+position: relative;
+}
+.cart-add-more button{
+	padding: 8px 40px;
+	font-size: 18px;
+	border: none;
+	outline: none;
+	background-color:#ff7722;
+	position: sticky;
+	border-radius: 2px;
+	color: #fff;
+	font-weight: 500;
+}
+.cart-payment-btn button{
+	padding: 8px 40px;
+	font-size: 18px;
+	border: none;
+	outline: none;
+	
+	position: sticky;
+	border-radius: 2px;
+	color: #fff;
+	font-weight: 500;
+}
+/*------------------------order page-------------*/
+@media (max-width:630px){
+	
+	.orderpage-filter{
+		display: none;
+		
+	}
+		
+	}
+/*---------------profile-page-----------------*/
+.profile-page h6:hover{
+ color: rgb(30, 153, 112);
+}
 

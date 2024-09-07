@@ -35,19 +35,19 @@ const ProductDetails = () => {
     
   return (
     <Layout>
-    <div className="container">
-   <div className="row center mt-3">
+    <div className="container-fluid">
+   <div className="row center  mt-4">
    
-     <div className="col-md-6 col-6 m-3">
-     <img src={`http://localhost:8000/auth/api/product/productimg/${product._id}`} className=" img-fluid" width='500px' height='700px' alt="..." />
+     <div className="col-md-6 col-6 ml-3">
+     <img src={`http://localhost:8000/auth/api/product/productimg/${product._id}`} className=" img-fluid" width='400px' height='550px' alt="..." />
        
         </div>
      
       
     
-     <div className='col-md-5 col-10 mb-3'>
+     <div className='col-md-5 col-10 mb-2 mt-3 '>
      <div>
-     {product.names}
+     <h4>{product.names}</h4>
      </div>
      <div>
      {product.category?.names}
@@ -66,8 +66,9 @@ const ProductDetails = () => {
    </div>
  </div>
 
-  <div className="container">
-  <div className="row mx-auto mt-3 ">
+  <div className="container-fluid">
+  <div className="row  mt-2 card-product ">
+    <div className='p-3'><h3>Looking for more</h3></div>
               {relatedproduct?.map((val,id) => {
                 return (
                  

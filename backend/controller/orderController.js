@@ -57,7 +57,7 @@ const userOrder=async(req,res)=>{
   console.log(req.user.id);
   
   const order = await OrderModel.find({buyer:req.user.id},{paysignatureid:0}).populate("products","-photo").sort({createdAt:-1})
-  console.log(order.length);
+  console.log(order);
   
   res.status(200).send({
     success:true,

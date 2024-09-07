@@ -2,11 +2,11 @@ import './App.css';
 import { Routes,Route } from 'react-router-dom';
 import HomePage from './pages/HomePage'
 import ContactUs from './pages/ContactUs'
-import About from './pages/About'
+
 import PaheNotFound from './pages/PaheNotFound';
 import Register from './pages/authPage/Register';
 import Login from './pages/authPage/Login';
-import Dashboard from './pages/user/Dashboard';
+
 import PrivateRoute from './components/routes/Private';
 import ForgetPassword from './pages/authPage/ForgetPassword';
 import AdminRoutes from './components/routes/AdminRoutes';
@@ -39,7 +39,7 @@ function App() {
     <Route path='/product-details/:slug' element={<ProductDetails/>}/>
     <Route path='/category/:slug' element={<ByCategory/>}/>
     <Route path='/dashboard' element={<PrivateRoute/>}>
-    <Route path='' element={<Dashboard/>}/>
+  
     <Route path='orders' element={<Orders/>}/>
     <Route path='profile' element={<Profile/>}/>
     </Route>
@@ -52,7 +52,7 @@ function App() {
     <Route path='admin/update-product/:slug' element={<UpdateProduct/>}/>
     <Route path='admin/users' element={<Users/>}/>
     </Route>
-    <Route path='/about' element={<About/>}/>
+   
     <Route path='/contact' element={<ContactUs/>}/>
     <Route path='*' element={<PaheNotFound/>}/>
   </Routes>
