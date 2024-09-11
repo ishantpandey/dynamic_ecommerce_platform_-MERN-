@@ -22,6 +22,10 @@ const orderSchema = new mongoose.Schema({
     address:{
         type:String,
        
+    },
+    status:{
+        type:String,
+        default:"Process"
     }
 },{timestamps:true})
 

@@ -11,7 +11,7 @@ import PrivateRoute from './components/routes/Private';
 import ForgetPassword from './pages/authPage/ForgetPassword';
 import AdminRoutes from './components/routes/AdminRoutes';
 import AdminDashboard from './pages/Admin/AdminDashboard';
-import Users from './pages/Admin/Users';
+
 import CreateCategory from './pages/Admin/CreateCategory';
 import CreateProduct from './pages/Admin/CreateProduct';
 import UpdateProduct from './pages/Admin/UpdateProduct';
@@ -50,7 +50,7 @@ function App() {
     <Route path='admin/create-product' element={<CreateProduct/>}/>
     <Route path='admin/product' element={<Product/>}/>
     <Route path='admin/update-product/:slug' element={<UpdateProduct/>}/>
-    <Route path='admin/users' element={<Users/>}/>
+    
     </Route>
    
     <Route path='/contact' element={<ContactUs/>}/>

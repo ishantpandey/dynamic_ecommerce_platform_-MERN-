@@ -89,22 +89,22 @@ const CreateCategory = () => {
             </div>
             <div className="col-md-6 col-6 col-sm-6 center">
               <FormCategory handleSubmit={handleSubmit} image={img} setimg={setimg} names={names} setNames={setNames}  />
-           <div className='w-60'>
+           <div className='w-60 mt-3'>
            <table class="table">
   <thead>
     <tr>
       
       <th scope="col">Category</th>
-      <th scope="col">Actions</th>
+      <th scope="col ms-5">Actions</th>
     </tr>
        </thead>
           <tbody>
           {
                   cat?.map((val)=>(
                     <tr key={val._id}>
-                    <td>{val.names}</td>
+                    <td className='ms-5'>{val.names}</td>
                     
-                    <td className='mx-auto'><button onClick={()=>{updateCategory(val._id,val.names)}} className='btn btn-warning'>Edit</button>
+                    <td className='mx-auto '><button onClick={()=>{updateCategory(val._id,val.names)}} className='btn btn-warning me-5'>Edit</button>
                     <button className='btn btn-danger' onClick={()=>{deleteCategory(val._id)}}>Delete</button></td>                   
                    
                   </tr>

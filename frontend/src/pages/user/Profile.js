@@ -1,17 +1,50 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../../components/Layout/Layout'
-import UserPanel from '../../components/Layout/UserPanel'
 import { useAuth } from '../../context/auth'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const Profile = () => {
   const[auth,setauth]=useAuth()
+  const [submitBtn,setSubmitBtn]=useState(false)
+  const[update,setUpdate]=useState({
+    name:auth.user.name,
+    email:auth.user.email,
+    address:auth.user.address,
+    phone:auth.user.phone
+  })
+  const updateUserData=(e)=>{
+ const{name,value}=e.target;
+ setUpdate((prev)=>{
+ return  {...prev,[name]:value}
+ })
+  }
+  const submitUserUpdateData=async()=>{
+    const{name,email,address,phone}=update
+    const {data}=await axios.post("http://localhost:8000/auth/api/update-user-data",{name,email,address,phone})
+    console.log(data);
+    localStorage.setItem('auth',JSON.stringify({...auth,user:data.user}))
+    setauth({...auth,user:data.user})
+    setSubmitBtn(false)
+  }
+  useEffect(()=>{
+    const data= localStorage.getItem('auth')
+   if(data){
+      const parseData=JSON.parse(data)
+      setauth({...auth,user:parseData.user,token:parseData.token})
+      
+   }
+   
+  },[])
+  
   const navigate=useNavigate()
   const handleLogout=()=>{
     setauth({...auth,user:null,token:''})
     localStorage.removeItem('auth')
     toast.success('Logout successfull')
+    navigate('/login')
+   
   }
   return (
     <Layout title='profile'>
@@ -44,13 +77,9 @@ const Profile = () => {
   
                    <hr></hr>
                    </div>
+                 
                    <div className="col-md-12 col-11 mx-auto profile-page  "style={{cursor:'pointer'}}>
-                  <h6 onClick={()=>navigate('/login')}>Switch Account</h6>
-  
-                   <hr></hr>
-                   </div>
-                   <div className="col-md-12 col-11 mx-auto profile-page  "style={{cursor:'pointer'}}>
-                  <h6>Update Account</h6>
+                  <h6 onClick={()=>navigate('/forgetpassword')}>Change Password</h6>
   
                    <hr></hr>
                    </div>
@@ -75,21 +104,21 @@ const Profile = () => {
                 <div className=' ' style={{borderRadius:'2px'}}>
                 <div className='p-3 pb-1 'style={{fontWeight:'500',fontSize:'22px'}}>Personal Information</div>
                  <hr/>
-                 <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                 <div className='p-2 pt-1 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                    <div>Name</div>
-                   <div className='me-3'>{auth.user.name}</div>
+                   <div className='me-3'>{submitBtn ? <input type='text' name='name' value={update.name} onChange={updateUserData}/>:auth.user.name}</div>
                  </div>
                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                    <div>Email</div>
-                   <div className='me-3'> {auth.user.email}</div>
+                   <div className='me-3'>{submitBtn ? <input type='text' name='email' value={update.email} onChange={updateUserData}/>:auth.user.email}</div>
                  </div>
                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                    <div>Address</div>
-                   <div className=''> <span className='  me-3'> {auth.user.address}</span></div>
+                   <div className='me-3'>{submitBtn ? <input type='text' name='address' value={update.address} onChange={updateUserData}/>:auth.user.address}</div>
                  </div>
                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
                    <div>Phone Number</div>
-                   <div className='me-3'>{auth.user.phone}</div>
+                   <div className='me-3'>{submitBtn ? <input type='text' name='phone' value={update.phone} onChange={updateUserData}/>:auth.user.phone}</div>
                  </div>
                  
                  
@@ -99,8 +128,10 @@ const Profile = () => {
                    
           
                <div className='mb-1 cart-payment-btn'>
+                {
+                  submitBtn? <button className='btn btn-primary' onClick={submitUserUpdateData}>Submit</button>: <button className='btn btn-primary'onClick={()=>setSubmitBtn(true)}  >Edit Profile</button>
+                }
                 
-                 <button className='btn btn-primary' >Edit Profile</button>
                </div>
               
                    </div>

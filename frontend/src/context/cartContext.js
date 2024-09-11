@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { useAuth } from './auth'
 
 const cartProduct = createContext()
 
 const CartContext = ({children}) => {
     const [cart,setCart]=useState([])
+   
     useEffect(()=>{
-        let item = localStorage.getItem('cart')
+        let item = localStorage.getItem( "cart")
         if(item){setCart(JSON.parse(item))}
     },[])
   return (

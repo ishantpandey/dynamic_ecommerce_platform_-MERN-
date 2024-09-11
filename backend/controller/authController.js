@@ -83,5 +83,11 @@ const forgetPassword=async(req,res)=>{
     })
 }
 }
+const updateUserData=async(req,res)=>{
+    const{name,email,address,phone}=req.body
+  const user =  await User.updateOne({_id:req.user.id},{$set:{name,email,address,phone}})
 
-module.exports={register,login,forgetPassword}
+res.send({success:true,user:req.body})
+}
+
+module.exports={register,login,forgetPassword,updateUserData}

@@ -14,8 +14,9 @@ const SearchResult = () => {
         <div className="row  mt-5">
         
           <div className="col-md-11 mx-auto">
-          {search?.result.length}
+          
             <div className="row card-product mx-auto">
+           <span className='fs-6 p-2 '>Total Result : {search?.result.length}</span> 
               {search.result?.map((val,id) => {
                 return (
                   <Card key={id} slug={val.slug} pid={val._id} price={val.price} />

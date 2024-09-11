@@ -3,42 +3,49 @@ import Layout from '../../components/Layout/Layout'
 
 import axios from 'axios'
 
+const status=['Process','On The Way','Delivered','Cancelled','Returned','All Orders']
 const Orders = () => {
   const [order, setOrder] = useState([])
+  const[orderStatus,setOrderStatus]=useState("All Orders")
   const orders = async () => {
-    const { data } = await axios.get("http://localhost:8000/auth/api/order/order-page")
+    console.log(orderStatus);
+    const { data } = await axios.get(`http://localhost:8000/auth/api/order/order-page/${orderStatus}`)
     setOrder(data?.order)
-   
+    console.log(data);
     
+  }
+  const cancelOrders = async (oid) => {
+    console.log(orderStatus);
+    const { data } = await axios.get(`http://localhost:8000/auth/api/order/cancel-order/${oid}`)
+    if(data.success==true){
+     setOrderStatus('Cancelled')
+    
+    }
   }
   useEffect(() => {
     orders()
-  }, [])
+  }, [orderStatus])
   return (
     <Layout title='orders'>
       <div className="container-fluid">
-        <div className="row mt-3 mx-auto"> 
+        <div className="row mt-3 "> 
         <div className="col-md-3 col-12 mx-auto mb-5 gx-2 orderpage-filter">
                  <div className='card-product'>
                  <div className='p-3 pb-1 fs-6'style={{fontWeight:'500',fontSize:'16px'}}><h4>Filter</h4></div>
                  <div  style={{display:'flex',flexDirection:'row',justifyContent:'center'}}><h6>ORDER STATUS</h6></div>
                  <hr/>
-                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'start',alignItems:'center'}}>
-                    <div><input type="radio" name='radio' /></div>
-                    <div className='ms-3'>On The Way</div>
-                  </div>
-                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'start',alignItems:'center'}}>
-                    <div><input type="radio" name='radio' /></div>
-                    <div className='ms-3'>Delivered</div>
-                  </div>
-                  <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'start',alignItems:'center'}}>
-                    <div><input type="radio" name='radio' /></div>
-                    <div className='ms-3'>Cancelled</div>
-                  </div>
-                  <div className='p-2 ms-3 pb-3' style={{display:'flex',flexDirection:'row',justifyContent:'start',alignItems:'center'}}>
-                    <div><input type="radio" name='radio' /></div>
-                    <div className='ms-3 '>Returned</div>
-                  </div>
+                 {
+                  status.map((val,ind)=>{
+                    return(
+                      <div className='p-2 ms-3' style={{display:'flex',flexDirection:'row',justifyContent:'start',alignItems:'center'}}>
+                      <div><input type="radio" value={val} name='radio' onChange={(e)=>setOrderStatus(e.target.value)} /></div>
+                      <div className='ms-3'>{val}</div>
+                    </div>
+                    )
+                  })
+                 }
+                 
+                 
                  
                  </div>
                
@@ -69,8 +76,11 @@ const Orders = () => {
                               </div>
                               <div className="col-md-2  mt-2 mx-auto"><span className='me-1'>₹</span>{p.price}</div>
                               <div className="col-md-2  mt-2 mx-auto"style={{display:'flex',flexDirection:'column',justifyContent:'space-between'}}>
-                                <div>Status : <span className='text-success'> Progress</span></div>
-                                <div className='m-1 cart-add-more'><button>Cancel</button></div>
+                                <div>Status : <span className='text-success'> {val.status}</span></div>
+                                {
+                                  (val.status=="On The Way" || val.status=="Process") ?  <div className='m-1 cart-add-more'><button onClick={()=>cancelOrders(val._id)}>Cancel</button></div> : <div className='mb-2'></div>
+                                }
+                               
                               </div>
                             </div>
                            </div>

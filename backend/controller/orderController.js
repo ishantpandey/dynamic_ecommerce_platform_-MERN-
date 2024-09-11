@@ -30,7 +30,7 @@ const expectedSignature = crypto.createHmac('sha256',process.env.RAZORPAY_API_SE
                          
  const response = razorpay_signature==expectedSignature
  if(response){
- console.log(razorpay_payment_id+" / "+razorpay_signature+" / "+razorpay_order_id+' / '+userid+" / "+cart+" / "+address);
+ 
  await new OrderModel({
   products:cart,
   orderid:razorpay_order_id,
@@ -54,15 +54,31 @@ const expectedSignature = crypto.createHmac('sha256',process.env.RAZORPAY_API_SE
 }
 
 const userOrder=async(req,res)=>{
-  console.log(req.user.id);
   
-  const order = await OrderModel.find({buyer:req.user.id},{paysignatureid:0}).populate("products","-photo").sort({createdAt:-1})
-  console.log(order);
   
-  res.status(200).send({
-    success:true,
-    order
-  })
+  if(req.params.orderStatus=="All Orders"){
+    const order = await OrderModel.find({buyer:req.user.id},{paysignatureid:0}).populate("products","-photo").sort({createdAt:-1})
+    res.status(200).send({
+      success:true,
+      order
+    })
+  }
+  else{
+    const order = await OrderModel.find({$and:[{buyer:req.user.id},{status:req.params.orderStatus},]},{paysignatureid:0}).populate("products","-photo").sort({createdAt:-1})
+    res.status(200).send({
+      success:true,
+      order
+    })
+  }
+  
+ 
+  console.log(req.params.orderStatus);
 }
 
-module.exports={checkout,paymentvarification,getkey,userOrder}
+const cancelOrders=async(req,res)=>{
+  await OrderModel.updateOne({$and:[{buyer:req.user.id},{_id:req.params.oid}]},{$set:{status:'Cancelled'}})
+  
+  res.send({success:true})
+}
+
+module.exports={checkout,paymentvarification,getkey,userOrder,cancelOrders}

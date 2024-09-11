@@ -184,8 +184,8 @@ const serachProduct=async(req,res)=>{
       
       const product = await ProductModel.find({
          $or: [
-            {names:{$regex:keyword , $options:"i"}},
-            {description:{$regex:keyword , $options:"i"}}
+            {names:{$regex:keyword , $options:"i"}}
+            
          ]
       }).select("-photo")
       console.log(keyword);

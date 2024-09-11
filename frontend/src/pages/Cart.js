@@ -85,7 +85,7 @@ const totalAmount=()=>{
       
         <div className="container">
            
-            <div className="row  mx-auto mt-3">
+            <div className="row  mt-3">
                 <div className="col-md-7 mb-2  col-12 mx-auto ">
                 <div className="row mb-2 card-product shadow" style={{borderRadius:'2px'}}>
                   <div className="cart-add-more p-3">
@@ -142,7 +142,7 @@ const totalAmount=()=>{
                 
                 </div>
               
-                 <div className="col-md-4 col-12 mx-auto mb-5 gx-2">
+                 <div className="col-md-4 col-12 mx-auto mb-5 gx-0">
                  <div className='card-product shadow' style={{borderRadius:'2px'}}>
                  <div className='p-3 pb-1 fs-6'style={{fontWeight:'500',fontSize:'16px'}}>Price Details</div>
                   <hr/>

@@ -1,7 +1,19 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { useAuth } from '../../context/auth'
 
 const AdminPanel = () => {
+  const navigate=useNavigate()
+  const[auth,setauth]=useAuth()
+  const handleLogout=()=>{
+
+    setauth({...auth,user:null,token:''})
+    localStorage.removeItem('auth')
+    toast.success('Logout successfull')
+    navigate('/login')
+   
+  }
   return (
     <>
     <div className="center">
@@ -10,10 +22,10 @@ const AdminPanel = () => {
             <li className='list-group-item'> <NavLink to='/dashboard/admin/create-product'> create product</NavLink></li>
             <li className='list-group-item'> <NavLink to='/dashboard/admin/product'> product</NavLink></li>
             <li className='list-group-item'> <NavLink to='/dashboard/admin/update-product'> update product</NavLink></li>
-            <li className='list-group-item'> <NavLink to='/dashboard/admin/users'> Users  </NavLink></li>
-           
-     
-  
+            <li className='list-group-item' onClick={handleLogout} style={{cursor:'pointer'}}> logout</li>
+            
+            
+
         </ul>
     </div>
     </>

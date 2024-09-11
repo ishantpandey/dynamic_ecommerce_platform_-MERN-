@@ -3,11 +3,12 @@ import { Link, NavLink } from 'react-router-dom'
 import { useAuth } from '../../context/auth'
 import { toast } from 'react-toastify'
 import SearchInput from './SearchInput'
+import { useCart } from '../../context/cartContext'
 
 
 const Header = () => {
   const[auth,setauth]=useAuth()
-  
+  const[cart,setCart]=useCart()
 
   return (
     <>
@@ -20,14 +21,14 @@ const Header = () => {
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
       <span className="navbar-toggler-icon"></span>
     </button>
-    <div className="collapse navbar-collapse" id="mynavbar">
+    <div className="collapse navbar-collapse mt-2" id="mynavbar">
       <div className="navbar-nav me-auto">
        
       </div>
      
       <div className="d-flex ">
         <ul className='navbar-nav'>
-        <li className="nav-item me-5" >
+        <li className="nav-item me-5 " >
          <SearchInput/>
         </li>
        
@@ -35,8 +36,8 @@ const Header = () => {
         <li className="nav-item me-1" >
           <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/"><span style={{fontWeight:'500'}}>Home</span></NavLink>
         </li>
-        <li  className="nav-item me-1" >
-        <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link "  aria-current="page" to={`/cart`}><span style={{fontWeight:'500'}}>Cart</span></NavLink>
+        <li  className="nav-item me-1 " >
+        <NavLink  style={({isActive})=> isActive ? {borderBottom:"2px solid green"}:{}} className="nav-link cart-list"  aria-current="page" to={`/cart`}><span className='me-1' style={{fontWeight:'500'}}>Cart </span><div className='cart-count'>{cart?.length}</div></NavLink>
       </li>
       <li className="nav-item me-1" >
           <NavLink style={({isActive})=> isActive ? {borderBottom:"2px solid rgb(114, 233, 122)"}:{}} className="nav-link " aria-current="page" to="/dashboard/orders"><span style={{fontWeight:'500'}}>Orders</span></NavLink>

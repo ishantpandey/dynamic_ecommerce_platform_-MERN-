@@ -21,11 +21,11 @@ const ByCategory = () => {
   return (
     <Layout>
          <div className="container-fluid">
-        <div className="row center mt-2">
-        {<h2>{cate}</h2>}
-          <div className="col-md-10 mx-auto mt-2">
+        <div className="row  mt-2">
+        {<h2> For {cate}</h2>}
+          <div className="col-md-10 card-product mx-auto mt-2">
           
-            <div className="row mx-auto">
+            <div className="row mx-auto ">
               {products?.map((val,id) => {
                
                 return (
